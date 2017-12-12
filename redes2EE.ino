@@ -6,23 +6,15 @@
 int ledPortao = 4;
 int ledLuz = 5;
 int ledAr = 7;
-/* rede ECOMP 
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };   
-byte ip[] = { 172, 16, 95, 30};                      
-byte gateway[] = { 172, 16, 1, 1};                  
-byte subrede[] = { 255, 255, 128, 0 };               
-EthernetServer server(80);                          
-String readString;
-
-*/
 
 //REDE ROTEADOR TPLINK
-
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };   //endereço do mac
 byte ip[] = { 192, 168, 0, 110};                      // indereço de ip armazenado em um array [ESSE ENDEREÇO É O QUE VAI SER USADO PARA ACESSAR A APLICAÇÃO WEB NO BROWSER]
 byte gateway[] = { 192, 168, 0, 1};                   // gatway padrão
 byte subrede[] = { 255, 255, 255, 0 };                  //mascara de subrede
 EthernetServer server(80);                             //Porta a ser usada     
+
+//cria uma string onde vai ser armazenado [no nosso caso, a entrada do cliente, ou seja, os botoes do codigo html]
 String readString;
 
 void setup() {
@@ -63,7 +55,7 @@ void loop() {
           //Serial.print(c);
          }
 
-         //se a requisição HTTP terminou...
+        
          if (c == '\n') {          
            Serial.println(readString); //print para debuging
      
@@ -238,7 +230,13 @@ void loop() {
            //led 6
            cliente.println("<a href=\"/ligaLuzes\"\">Ligar Luzes</a>");
            cliente.println("<a href=\"/desligaLuzes\"\">Desligar Luzes</a><br />");
-           cliente.println("<br />"); 
+           cliente.println("<br />");
+           cliente.println("<br />");
+           cliente.println("<br />");
+
+           //membros da equipe!!!!!
+           cliente.println("<H2>criado e desenvolido por Arthur Pedro | Breno Medeiros | Heitor Lima | Kalécio Pereira</H2>"); 
+            
            cliente.println("</BODY>");
            cliente.println("</HTML>");
 
@@ -250,7 +248,7 @@ void loop() {
            //controls the Arduino if you press the buttons
 
            //Portão
-           
+                //se o endereço passaso for igual a "ip/abreportao/" executará esse trecho
            if (readString.indexOf("abrePortao") >0){
                digitalWrite(ledPortao, HIGH);
                Serial.println("Portão Aberto");

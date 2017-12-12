@@ -23,6 +23,8 @@ byte ip[] = { 192, 168, 0, 110};                      // indereço de ip armazena
 byte gateway[] = { 192, 168, 0, 1};                   // gatway padrão
 byte subrede[] = { 255, 255, 255, 0 };                  //mascara de subrede
 EthernetServer server(80);                             //Porta a ser usada     
+
+//cria uma string onde vai ser armazenado [no nosso caso, a entrada do cliente, ou seja, os botoes do codigo html]
 String readString;
 
 void setup() {
@@ -63,7 +65,7 @@ void loop() {
           //Serial.print(c);
          }
 
-         //se a requisição HTTP terminou...
+        
          if (c == '\n') {          
            Serial.println(readString); //print para debuging
      
@@ -250,7 +252,7 @@ void loop() {
            //controls the Arduino if you press the buttons
 
            //Portão
-           
+                //se o endereço passaso for igual a "ip/abreportao/" executará esse trecho
            if (readString.indexOf("abrePortao") >0){
                digitalWrite(ledPortao, HIGH);
                Serial.println("Portão Aberto");
