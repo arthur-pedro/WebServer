@@ -1,11 +1,11 @@
-//BIBLIOTECAS A SEREM IMPORTADAS PARA UTILIZA√á√ÉO DO  SHIELD ETHERNET
+//BIBLIOTECAS A SEREM IMPORTADAS PARA UTILIZA«√O DO  SHIELD ETHERNET
 
 #include <SPI.h>
 #include <Ethernet.h>
 
 int ledPortao = 4;
 int ledLuz = 5;
-int ledAr = 6;
+int ledAr = 7;
 /* rede ECOMP 
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };   
 byte ip[] = { 172, 16, 95, 30};                      
@@ -18,52 +18,52 @@ String readString;
 
 //REDE ROTEADOR TPLINK
 
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };   //endere√ßo do mac
-byte ip[] = { 192, 168, 0, 110};                      // indere√ßo de ip armazenado em um array [ESSE ENDERE√áO √â O QUE VAI SER USADO PARA ACESSAR A APLICA√á√ÉO WEB NO BROWSER]
-byte gateway[] = { 192, 168, 0, 1};                   // gatway padr√£o
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };   //endereÁo do mac
+byte ip[] = { 192, 168, 0, 110};                      // indereÁo de ip armazenado em um array [ESSE ENDERE«O … O QUE VAI SER USADO PARA ACESSAR A APLICA«√O WEB NO BROWSER]
+byte gateway[] = { 192, 168, 0, 1};                   // gatway padr„o
 byte subrede[] = { 255, 255, 255, 0 };                  //mascara de subrede
 EthernetServer server(80);                             //Porta a ser usada     
 String readString;
 
 void setup() {
- //Abre a comunica√ß√£o serial
+ //Abre a comunicaÁ„o serial
   Serial.begin(9600);
    while (!Serial) {
-    ; // Espera por uma cone√ß√£o
+    ; // Espera por uma coneÁ„o
   }
 
-  // seta o pino 4 como saida de 5v para o led
+  // seta o pino 4, 5, 6 como saida de 5v para o led
   pinMode(ledPortao, OUTPUT);
   pinMode(ledLuz, OUTPUT);
   pinMode(ledAr, OUTPUT);
 
-  // Come√ßa a conex√£o Ethernet / servidor
+  // ComeÁa a conex„o Ethernet / servidor
   Ethernet.begin(mac, ip, gateway, subrede);
   server.begin();
   Serial.print("Servidor iniciado: ");
   
-  // printa o endere√ßo de IP apenas como uma forma de verifica√ß√£o
+  // printa o endereÁo de IP apenas como uma forma de verificaÁ„o
   Serial.println(Ethernet.localIP());
 }
 
 
 void loop() {
   
-  // Cria uma conex√£o com o cliente
+  // Cria uma conex„o com o cliente
     EthernetClient cliente = server.available();
   if (cliente) {
     while (cliente.connected()) {   
       if (cliente.available()) {
         char c = cliente.read();
      
-        //L√™ char por char - HTTP request 
+        //LÍ char por char - HTTP request 
         if (readString.length() < 100) {
           //Armazena os character em uma String
           readString += c;
           //Serial.print(c);
          }
 
-         //se a requisi√ß√£o HTTP terminou...
+         //se a requisiÁ„o HTTP terminou...
          if (c == '\n') {          
            Serial.println(readString); //print para debuging
      
@@ -71,7 +71,7 @@ void loop() {
            cliente.println("Content-Type: text/html");
            cliente.println();     
 
-           //INICIO DO C√ìDIGO HTML
+           //INICIO DO C”DIGO HTML
            
            cliente.println("<HTML>");
            cliente.println("<HEAD>");
@@ -87,8 +87,8 @@ void loop() {
            cliente.println("<br />");  
            cliente.println("<H2>CRIANDO SERVERWEB USANDO ARDUINO E SHILD ETHERNET</H2>");
            cliente.println("<br />");  
-
-           //INICIO DO C√ìDIGO CSS!
+           cliente.println("<h1>DISPOSITIVOS DISPONÕVEIS</h1>");
+           //INICIO DO C”DIGO CSS!
            
            cliente.println("<style type=\"text/css\">");
            cliente.println("body {");
@@ -189,54 +189,55 @@ void loop() {
            cliente.println("}");
             
            cliente.println("</style>");
-           cliente.println("<h1>HTML</h1>");    
+               
            cliente.println("<table class=\"container\">");
            cliente.println("<thead>");
            cliente.println("<tr>");
            cliente.println("<th><h1>Dispositivos Conectados</h1></th>");
-           cliente.println("<th><h1>Estado do bot√£o</h1></th>");
-           cliente.println("<th><h1>Estado do Bot√£o</h1></th>");
+           cliente.println("<th><h1>Quantidade</h1></th>");
+           cliente.println("<th><h1>Disponibilidade</h1></th>");
+           cliente.println("<th><h1></h1></th>");
            cliente.println("</tr>");
            cliente.println("</thead>");
            cliente.println("<tbody>");
            cliente.println("<tr>");
-           cliente.println("<td>Port√£o Garagem</td>");
-           cliente.println("<td>Ligar</td>");
-           cliente.println("<td>Desligar</td>");
+           cliente.println("<td>Port„o Garagem</td>");
+           cliente.println("<td>1</td>");
+           cliente.println("<td>OK</td>");
            cliente.println("</tr>");
            cliente.println("<tr>");
            cliente.println("<td>Luzes da casa</td>");
-           cliente.println("<td>Ligar</td>");
-           cliente.println("<td>Desligar</td>");
+           cliente.println("<td>4</td>");
+           cliente.println("<td>OK</td>");
            cliente.println("</tr>");
            cliente.println("<tr>");
            cliente.println("<td>Ar condicionado</td>");
-           cliente.println("<td>Ligar</td>");
-           cliente.println("<td>Desligar</td>");
+           cliente.println("<td>2</td>");
+           cliente.println("<td>OK</td>");
            cliente.println("</tr>");
            cliente.println("</tbody>");
            cliente.println("</table>");
 
            //FIM DO CSS!
 
-
-           //Bot√µes exemplo - led 4
-           cliente.println("<a href=\"/?button1on\"\">Abrir Port√£o</a>");
-           cliente.println("<a href=\"/?button1off\"\">Fechar Port√£o</a><br />");   
+           cliente.println("<h1>PAINEL DE CONTROLE</h1>");
+           //Botıes exemplo - led 4
+           cliente.println("<a href=\"/abrePortao\"\">Abrir Port„o</a>");
+           cliente.println("<a href=\"/fechaPortao\"\">Fechar Port„o</a><br />");   
            cliente.println("<br />");     
            cliente.println("<br />"); 
            cliente.println("<br />"); 
 
            // led 5
-           cliente.println("<a href=\"/?button3on\"\">Ligar Arcondicionado</a>");
-           cliente.println("<a href=\"/?button3off\"\">Desligar Arcondicionado</a><br />");
+           cliente.println("<a href=\"/ligaAr\"\">Ligar Ar</a>");
+           cliente.println("<a href=\"/desligaAr\"\">Desligar Ar</a><br />");
            cliente.println("<br />");
            cliente.println("<br />"); 
            cliente.println("<br />");  
            
            //led 6
-           cliente.println("<a href=\"/?button3on\"\">Ligar Luzes</a>");
-           cliente.println("<a href=\"/?button3off\"\">Desligar Luzes</a><br />");
+           cliente.println("<a href=\"/ligaLuzes\"\">Ligar Luzes</a>");
+           cliente.println("<a href=\"/desligaLuzes\"\">Desligar Luzes</a><br />");
            cliente.println("<br />"); 
            cliente.println("</BODY>");
            cliente.println("</HTML>");
@@ -248,36 +249,36 @@ void loop() {
            cliente.stop();
            //controls the Arduino if you press the buttons
 
-           //Port√£o
+           //Port„o
            
-           if (readString.indexOf("?button1on") >0){
+           if (readString.indexOf("abrePortao") >0){
                digitalWrite(ledPortao, HIGH);
-               Serial.println("Port√£o Aberto");
+               Serial.println("Port„o Aberto");
            }
-           if (readString.indexOf("?button1off") >0){
+           if (readString.indexOf("fechaPortao") >0){
                digitalWrite(ledPortao, LOW);
-               Serial.println("Port√£o Fechado");
+               Serial.println("Port„o Fechado");
            }
 
-           //Arcondicionado mudar as portas!!!!!!!!!!!!!!!!!!!!
+           //Luz
 
-            if (readString.indexOf("?button2on") >0){
+            if (readString.indexOf("ligaLuzes") >0){
                digitalWrite(ledLuz, HIGH);
                Serial.println("Luzes acesas");
            }
-           if (readString.indexOf("?button2off") >0){
+           if (readString.indexOf("desligaLuzes") >0){
                digitalWrite(ledLuz, LOW);
                Serial.println("Luzes apagadas");
            }
 
 
-            //Luzes
+            //Ar
             
-            if (readString.indexOf("?button3on") >0){
+            if (readString.indexOf("ligaAr") >0){
                digitalWrite(ledAr, HIGH);
                Serial.println("Ar ligado");
            }
-           if (readString.indexOf("?button3off") >0){
+           if (readString.indexOf("desligaAr") >0){
                digitalWrite(ledAr, LOW);
                Serial.println("Ar desligado");
            }
