@@ -9,7 +9,7 @@ int ledAr = 7;
 
 //REDE ROTEADOR TPLINK
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };   //endereço do mac
-byte ip[] = { 192, 168, 0, 110};                      // indereço de ip armazenado em um array [ESSE ENDEREÇO É O QUE VAI SER USADO PARA ACESSAR A APLICAÇÃO WEB NO BROWSER]
+byte ip[] = { 192, 168, 0, 104};                      // indereço de ip armazenado em um array [ESSE ENDEREÇO É O QUE VAI SER USADO PARA ACESSAR A APLICAÇÃO WEB NO BROWSER]
 byte gateway[] = { 192, 168, 0, 1};                   // gatway padrão
 byte subrede[] = { 255, 255, 255, 0 };                  //mascara de subrede
 EthernetServer server(80);                             //Porta a ser usada     
@@ -69,7 +69,7 @@ void loop() {
            cliente.println("<HEAD>");
            cliente.println("<meta name='apple-mobile-web-app-capable' content='yes' />");
            cliente.println("<meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />");
-           cliente.println("<link rel='stylesheet' type='text/css' href='http://randomnerdtutorials.com/ethernetcss.css' />");
+           //cliente.println("<link rel='stylesheet' type='text/css' href='http://randomnerdtutorials.com/ethernetcss.css' />");
            cliente.println("<TITLE>PROJETO REDES 2EE</TITLE>");
            cliente.println("<meta charset=\"utf-8\">");
            cliente.println("</HEAD>");
@@ -78,11 +78,56 @@ void loop() {
            cliente.println("<hr />");
            cliente.println("<br />");  
            cliente.println("<H2>CRIANDO SERVERWEB USANDO ARDUINO E SHILD ETHERNET</H2>");
+           
+           
            cliente.println("<br />");  
            cliente.println("<h1>DISPOSITIVOS DISPONÍVEIS</h1>");
-           //INICIO DO CÓDIGO CSS!
+           
+          
+          
+           //INICIO DO CÓDIGO CSS - pagina !
            
            cliente.println("<style type=\"text/css\">");
+            
+           cliente.println(" body{");
+           cliente.println("margin:60px 0px; padding:0px;");
+           cliente.println("text-align:center;");
+           cliente.println("}");
+           cliente.println("h1");
+           cliente.println("{");
+           cliente.println("text-align: center;");
+           cliente.println("font-family:Arial, \"Trebuchet MS\", Helvetica, sans-serif;");
+           cliente.println("}");
+           cliente.println("h2");
+           cliente.println("{");
+           cliente.println("text-align: center;");
+           cliente.println("font-family:Arial, \"Trebuchet MS\", Helvetica, sans-serif;");
+           cliente.println("}");
+           cliente.println("a");
+           cliente.println("{");
+           cliente.println("text-decoration:none;");
+           cliente.println("width:75px;");
+           cliente.println("height:50px;");
+           cliente.println("border-color:black;");
+           cliente.println("border-top:2px solid;");
+           cliente.println("border-bottom:2px solid;");
+           cliente.println("border-right:2px solid;");
+           cliente.println("border-left:2px solid;");
+           cliente.println("border-radius:10px 10px 10px;");
+           cliente.println("-o-border-radius:10px 10px 10px;");
+           cliente.println("-webkit-border-radius:10px 10px 10px;");
+           cliente.println("font-family:\"Trebuchet MS\",Arial, Helvetica, sans-serif;");
+           cliente.println("-moz-border-radius:10px 10px 10px;");
+           cliente.println("background-color:#293F5E;");
+           cliente.println("padding:8px;");
+           cliente.println("text-align:center;");
+           cliente.println("}");
+           cliente.println("a:link {color:white;}      /* unvisited link */");
+           cliente.println("a:visited {color:white;}  /* visited link */");
+           cliente.println("a:hover {color:white;}  /* mouse over link */");
+           cliente.println("a:active {color:white;}  /* selected link */");
+            
+           //final do css relacionado aos botões           
            cliente.println("body {");
            cliente.println("font-family: 'Open Sans', sans-serif;");
            cliente.println("font-weight: 300;");
